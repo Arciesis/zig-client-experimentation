@@ -14,6 +14,10 @@ pub fn build(b: *std.Build) void {
         .root_module = exe_mod,
     });
 
+    const common_dep = b.dependency("common_experiment", .{});
+    exe.root_module.addImport("common", common_dep.module("root"));
+    // exe.linkLibrary(common_dep.artifact("root"));
+
     b.installArtifact(exe);
 
     const run_cmd = b.addRunArtifact(exe);
